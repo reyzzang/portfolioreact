@@ -1,6 +1,13 @@
-import { Link, NavLink } from "react-router";
+import { Link, useLocation } from "react-router";
 
 export default function Navbar({ fullName }) {
+  const { pathname, hash } = useLocation();
+
+  const isHomeActive = pathname === "/" && !hash;
+  const isPostsActive = pathname === "/posts";
+  const isProjectsActive = pathname === "/" && hash === "#projects";
+  const isContactActive = pathname === "/" && hash === "#contact";
+
   return (
     <nav className="navbar">
       <div className="container nav-inner">
@@ -9,26 +16,30 @@ export default function Navbar({ fullName }) {
         </Link>
         <ul className="nav-links">
           <li>
-            <NavLink
-              to="/"
-              className={({ isActive }) => (isActive ? "nav-active" : "")}
-            >
+            <Link to="/" className={isHomeActive ? "nav-active" : ""}>
               მთავარი
-            </NavLink>
+            </Link>
           </li>
           <li>
-            <NavLink
-              to="/posts"
-              className={({ isActive }) => (isActive ? "nav-active" : "")}
-            >
+            <Link to="/posts" className={isPostsActive ? "nav-active" : ""}>
               სტატიები (API)
-            </NavLink>
+            </Link>
           </li>
           <li>
-            <a href="/#projects">პროექტები</a>
+            <Link
+              to="/#projects"
+              className={isProjectsActive ? "nav-active" : ""}
+            >
+              პროექტები
+            </Link>
           </li>
           <li>
-            <a href="/#contact">კონტაქტი</a>
+            <Link
+              to="/#contact"
+              className={isContactActive ? "nav-active" : ""}
+            >
+              კონტაქტი
+            </Link>
           </li>
         </ul>
       </div>
